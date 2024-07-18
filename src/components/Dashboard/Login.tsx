@@ -1,5 +1,4 @@
 import { Grid, Paper } from "@mui/material";
-import { useState } from "react";
 
 export const Login = () => {
     return (
@@ -11,22 +10,17 @@ export const Login = () => {
             justifyContent={"center"}
         >
             <Grid
+                xs
+                sm={6}
+                md={6}
+                lg={6}
                 container
-                width={"500px"}
+                width={"100%"}
                 height={"700px"}
-                alignItems={"center"}
-                justifyContent={"center"}
             >
                 <Paper
                     elevation={20}
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
+                >  
 
                 </Paper>
             </Grid>
