@@ -1,5 +1,5 @@
-import { Button, Grid, Paper, TextField } from "@mui/material";
-import axios from "axios";
+import { Button, Grid, Paper, Snackbar, TextField } from "@mui/material";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -38,6 +38,8 @@ const Container = ({ children }: childrenI) => (
 
 export const Login = () => {
 
+    const [openFeedback, setOpenFeedback] = useState<string | null>(null)
+
     const methods = useForm({
         defaultValues: {
             name: "",
@@ -49,8 +51,15 @@ export const Login = () => {
         try {
             const response = await axios.post("http://localhost:3000/auth/login", data);
             console.log(response)
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            if (error.response.status === 404) {
+                setOpenFeedback("Usuário nâo encontrado")
+                return
+            } else if (error.response.status == 400) {
+                setOpenFeedback("Verifique os campos e tente novamente!")
+                return
+            }
+            setOpenFeedback("Ocorreu um erro, por favor, tente novamente mais tarde!")
         }
     }
 
@@ -133,7 +142,15 @@ export const Login = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </Container>'
+            </Container>
+            {
+                openFeedback && (
+                    <Snackbar
+                        open={!!openFeedback}
+                        message={openFeedback}
+                    />
+                )
+            }
         </form>
     )
 };
