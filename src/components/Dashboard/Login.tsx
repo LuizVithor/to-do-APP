@@ -1,5 +1,7 @@
 import { Button, Grid, Paper, TextField } from "@mui/material";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface childrenI {
     children: React.ReactNode
@@ -35,75 +37,103 @@ const Container = ({ children }: childrenI) => (
 )
 
 export const Login = () => {
+
+    const methods = useForm({
+        defaultValues: {
+            name: "",
+            password: ""
+        }
+    })
+
+    const submit = async (data: typeof methods.formState.defaultValues) => {
+        try {
+            const response = await axios.post("http://localhost:3000/auth/login", data);
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <Container>
-            <Grid
-                container
-                height={"100%"}
-                padding={"0px 20px"}
-                alignItems={"center"}
-                flexDirection={"column"}
-                justifyContent={"space-evenly"}
-            >
-                <Grid
-                    item
-                    sx={{
-                        width: "100%"
-                    }}
-                >
-                    <TextField
-                        fullWidth
-                        size={"small"}
-                        label={"Email ou Nome de usuário"}
-                    />
-                </Grid>
-                <Grid
-                    item
-                    sx={{
-                        width: "100%"
-                    }}
-                >
-                    <TextField
-                        fullWidth
-                        size={"small"}
-                        label={"Senha"}
-                    />
-                </Grid>
+        <form
+            style={{
+                width: "100%",
+                height: "100%"
+            }}
+            onSubmit={methods.handleSubmit(submit)}
+        >
+            <Container>
                 <Grid
                     container
-                    spacing={2}
-                    justifyContent={"center"}
+                    height={"100%"}
+                    padding={"0px 20px"}
+                    alignItems={"center"}
+                    flexDirection={"column"}
+                    justifyContent={"space-evenly"}
                 >
                     <Grid
-                        lg={4}
-                        sm={4}
-                        xs={4}
-                        md={4}
                         item
+                        sx={{
+                            width: "100%"
+                        }}
                     >
-                        <Button
+                        <TextField
                             fullWidth
-                            variant="outlined"
-                        >
-                            Registrar
-                        </Button>
+                            size={"small"}
+                            label={"Email ou Nome de usuário"}
+                            {...methods.register("name")}
+                        />
                     </Grid>
                     <Grid
-                        lg={4}
-                        sm={4}
-                        xs={4}
-                        md={4}
                         item
+                        sx={{
+                            width: "100%"
+                        }}
                     >
-                        <Button
+                        <TextField
                             fullWidth
-                            variant="contained"
+                            size={"small"}
+                            label={"Senha"}
+                            {...methods.register("password")}
+                        />
+                    </Grid>
+                    <Grid
+                        container
+                        spacing={2}
+                        justifyContent={"center"}
+                    >
+                        <Grid
+                            lg={4}
+                            sm={4}
+                            xs={4}
+                            md={4}
+                            item
                         >
-                            Entrar
-                        </Button>
+                            <Button
+                                fullWidth
+                                variant="outlined"
+                            >
+                                Registrar
+                            </Button>
+                        </Grid>
+                        <Grid
+                            item
+                            lg={4}
+                            sm={4}
+                            xs={4}
+                            md={4}
+                        >
+                            <Button
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                            >
+                                Entrar
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container>'
+        </form>
     )
 };
