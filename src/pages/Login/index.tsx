@@ -1,44 +1,15 @@
-import { Button, Grid, Paper, Snackbar, TextField } from "@mui/material";
-import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-interface childrenI {
-    children: React.ReactNode
-}
-
-const Container = ({ children }: childrenI) => (
-    <Grid
-        container
-        width={"100%"}
-        height={"100%"}
-        alignItems={"center"}
-        justifyContent={"center"}
-    >
-        <Grid
-            sm={5}
-            md={5}
-            lg={5}
-            xs={10}
-            container
-            height={"70%"}
-        >
-            <Paper
-                elevation={20}
-                style={{
-                    width: "100%",
-                    borderRadius: "20px"
-                }}
-            >
-                {children}
-            </Paper>
-        </Grid>
-    </Grid>
-)
+import { useNavigate } from "react-router-dom";
+import { Container } from "../../components/Login/Container";
+import { Button, Grid, Snackbar, TextField } from "@mui/material";
 
 export const Login = () => {
 
     const [openFeedback, setOpenFeedback] = useState<string | null>(null)
+
+    const navigate = useNavigate();
 
     const methods = useForm({
         defaultValues: {
@@ -121,6 +92,9 @@ export const Login = () => {
                             <Button
                                 fullWidth
                                 variant="outlined"
+                                onClick={() => {
+                                    navigate("/register")
+                                }}
                             >
                                 Registrar
                             </Button>
