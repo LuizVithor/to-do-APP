@@ -41,7 +41,7 @@ export function Register() {
 
             navigate("/")
         } catch (error) {
-            toast("Erro ao registrar usuário")
+            toast.error("Erro ao registrar usuário")
         }
     }
 
