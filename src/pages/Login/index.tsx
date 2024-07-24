@@ -1,11 +1,15 @@
-import axios from "axios";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { instance } from "../../services/axios";
+import { useAuth } from "../../contexts/customHooks";
 import { Container } from "../../components/Login/Container";
 import { Button, Grid, Snackbar, TextField } from "@mui/material";
 
 export const Login = () => {
+
+    const { setSession } = useAuth()
 
     const [openFeedback, setOpenFeedback] = useState<string | null>(null)
 
@@ -20,8 +24,12 @@ export const Login = () => {
 
     const submit = async (data: typeof methods.formState.defaultValues) => {
         try {
-            const response = await axios.post("http://localhost:3000/auth/login", data);
-            console.log(response)
+            const response = await instance.post("auth/login", data);
+            setSession({
+                name: data?.name,
+                token: response.data.token,
+            })
+            navigate("/dashboard")
         } catch (error: any) {
             if (error.response.status === 404) {
                 setOpenFeedback("Usuário nâo encontrado")

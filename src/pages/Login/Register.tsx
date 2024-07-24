@@ -3,9 +3,9 @@ import { Container } from "../../components/Register/Container";
 import { Controller, useForm } from "react-hook-form";
 import { MuiFileInput } from "mui-file-input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { fileToBase64 } from "../../utils/fileToBase64";
 import { toast } from "react-toastify";
+import { instance } from "../../services/axios";
 
 export function Register() {
 
@@ -35,9 +35,9 @@ export function Register() {
         try {
             const dataF = { ...data } as unknown as formFormated
 
-            dataF.image = await fileToBase64(data.image)
+            if (data.image) dataF.image = await fileToBase64(data.image)
 
-            await axios.post("http://localhost:3000/auth/register", dataF)
+            await instance.post("auth/register", dataF)
 
             navigate("/")
         } catch (error) {
@@ -159,7 +159,7 @@ export function Register() {
                     </Paper>
                 </Grid>
             </Container>
-            
+
         </form>
     )
 }

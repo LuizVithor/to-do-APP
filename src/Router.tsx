@@ -1,19 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
+import Cookies from "cookies-js";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { Login } from './pages/Login';
-import { Register } from './pages/Login/Register';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { useAuth } from './contexts/customHooks';
+import { SignedRoutes } from './routes/SignedRoutes';
+import { DefaultRoutes } from './routes/DefaultRoutes';
 
 function Router() {
+
+  const { token, setSession } = useAuth()
+
+  useLayoutEffect(() => {
+    const session = Cookies.get("@session")
+    if (session) {
+      const sessionF = JSON.parse(session)
+      setSession(sessionF)
+    }
+  }, [])
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route index element={<Login />} />
-        <Route path='/register' element={<Register />} />
-      </Routes>
+      {
+        token
+          ? <SignedRoutes />
+          : <DefaultRoutes />
+      }
     </BrowserRouter>
   )
 }
