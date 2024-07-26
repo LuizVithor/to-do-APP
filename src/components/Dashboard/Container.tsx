@@ -1,19 +1,46 @@
 import { NavBar } from "./NavBar";
-import { Grid } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
     return (
         <Grid
-            m={12}
-            lg={12}
-            md={12}
-            sm={12}
-            xs={12}
+            container
             margin={0}
+            width={"100%"}
             height={"100%"}
+            alignItems={"center"}
+            // flexDirection={"column"}
+            justifyContent={"center"}
+            sx={{
+                backgroundColor: "#ebdfcc"
+            }}
         >
-            <NavBar />
-            {children}
+            <Grid
+                lg={7}
+                md={11}
+                xs={10}
+                sm={10}
+                container
+                height={"80%"}
+            >
+                <Paper
+                    elevation={10}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "15px"
+                    }}
+                >
+                    <Grid
+                        item
+                        height={"10%"}
+                        width={"100%"}
+                    >
+                        <NavBar />
+                    </Grid>
+                    {children}
+                </Paper>
+            </Grid>
         </Grid>
     )
 }

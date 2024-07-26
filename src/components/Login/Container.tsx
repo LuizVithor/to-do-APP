@@ -1,35 +1,43 @@
 import React from "react";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Paper, useTheme } from "@mui/material";
 
 interface childrenI {
     children: React.ReactNode
 }
 
-export const Container = ({ children }: childrenI) => (
-    <Grid
-        container
-        width={"100%"}
-        height={"100%"}
-        alignItems={"center"}
-        justifyContent={"center"}
-    >
+export const Container = ({ children }: childrenI) => {
+
+    const theme = useTheme();
+
+    return (
         <Grid
-            sm={5}
-            md={4}
-            lg={3}
-            xs={10}
             container
-            height={"40%"}
+            width={"100%"}
+            height={"100%"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            sx={{
+                backgroundColor: theme.palette.background.default
+            }}
         >
-            <Paper
-                elevation={20}
-                style={{
-                    width: "100%",
-                    borderRadius: "20px"
-                }}
+            <Grid
+                sm={5}
+                md={4}
+                lg={3}
+                xs={10}
+                container
+                height={"40%"}
             >
-                {children}
-            </Paper>
+                <Paper
+                    elevation={20}
+                    style={{
+                        width: "100%",
+                        borderRadius: "20px"
+                    }}
+                >
+                    {children}
+                </Paper>
+            </Grid>
         </Grid>
-    </Grid>
-)
+    )
+}

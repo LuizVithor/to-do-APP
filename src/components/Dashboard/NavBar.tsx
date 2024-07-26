@@ -27,11 +27,12 @@ export function NavBar() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box width={"100%"}>
             <AppBar
                 position="static"
                 sx={{
-                    backgroundColor: "#13068a"
+                    backgroundColor: "#02031a",
+                    borderRadius: "15px 15px 0px 0px"
                 }}
             >
                 <Toolbar>

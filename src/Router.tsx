@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { useAuth } from './contexts/customHooks';
 import { SignedRoutes } from './routes/SignedRoutes';
 import { DefaultRoutes } from './routes/DefaultRoutes';
+import { TasksProvider } from './contexts/TasksContext';
 
 function Router() {
 
@@ -28,7 +29,9 @@ function Router() {
       {
         token
           ? <SignedRoutes />
-          : <DefaultRoutes />
+          : <TasksProvider>
+            <DefaultRoutes />
+          </TasksProvider>
       }
     </BrowserRouter>
   )
