@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import './index.css'
 import Router from './Router';
 import ReactDOM from 'react-dom/client';
+import { ptBR } from '@mui/x-data-grid/locales';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { AuthProvider } from './contexts/AuthContext';
+import { ptBR as coreptBR } from '@mui/material/locale';
+import { TasksProvider } from './contexts/TasksContext';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 const theme = createTheme({
@@ -14,37 +16,22 @@ const theme = createTheme({
     success: { main: "#00ff00" },
     secondary: { main: "#021b2b" },
     background: { default: "#ebdfcc" },
-  },
-  mixins: {
-    //@ts-ignore
-    MuiDataGrid: {
-      color: "white",
-      containerBackground: '#02031a',
-    },
-  },
-  components: {
-     //@ts-ignore
-    MuiDataGrid: {
-      styleOverrides: {
-        root: {
-          '& .MuiDataGrid-columnHeaderTitle': {
-            color: 'white'
-          },
-          
-        },
-      },
-    },
-  },
-})
+  }
+},
+  ptBR,
+  coreptBR,
+)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <ThemeProvider theme={theme}>
     <AuthProvider>
-      <Router />
+      <TasksProvider>
+        <Router />
+        <ToastContainer />
+      </TasksProvider>
     </AuthProvider>
-    <ToastContainer />
-  </ThemeProvider>
+  </ThemeProvider >
   // </React.StrictMode>
   ,
 )

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
-import Cookies from "cookies-js";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -10,14 +9,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { useAuth } from './contexts/customHooks';
 import { SignedRoutes } from './routes/SignedRoutes';
 import { DefaultRoutes } from './routes/DefaultRoutes';
-import { TasksProvider } from './contexts/TasksContext';
 
 function Router() {
 
   const { token, setSession } = useAuth()
 
   useLayoutEffect(() => {
-    const session = Cookies.get("@session")
+    const session = localStorage.getItem("@session")
     if (session) {
       const sessionF = JSON.parse(session)
       setSession(sessionF)
@@ -29,9 +27,7 @@ function Router() {
       {
         token
           ? <SignedRoutes />
-          : <TasksProvider>
-            <DefaultRoutes />
-          </TasksProvider>
+          : <DefaultRoutes />
       }
     </BrowserRouter>
   )

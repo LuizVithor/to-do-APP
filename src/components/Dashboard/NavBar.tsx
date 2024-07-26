@@ -12,9 +12,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
 
 export function NavBar() {
-
-    const navigate = useNavigate()
-    const { removeSession } = useAuth()
+    const navigate = useNavigate();
+    const { removeSession, profileImage } = useAuth();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -57,7 +56,15 @@ export function NavBar() {
                             onClick={handleMenu}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            {profileImage ? (
+                                <img
+                                    src={profileImage}
+                                    alt="Profile"
+                                    style={{ width: 40, height: 40, borderRadius: '50%' }}
+                                />
+                            ) : (
+                                <AccountCircle />
+                            )}
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -76,10 +83,12 @@ export function NavBar() {
                         >
                             <MenuItem
                                 onClick={() => {
-                                    removeSession()
-                                    navigate("/")
+                                    removeSession();
+                                    navigate("/");
                                 }}
-                            >Sair</MenuItem>
+                            >
+                                Sair
+                            </MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>

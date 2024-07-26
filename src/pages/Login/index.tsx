@@ -28,6 +28,7 @@ export const Login = () => {
             setSession({
                 name: data?.name,
                 token: response.data.token,
+                profileImage: response.data.profileImage
             })
             navigate("/dashboard")
         } catch (error: any) {

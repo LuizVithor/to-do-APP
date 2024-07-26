@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "cookies-js";
 
 export const instance = axios.create({
     baseURL: "http://localhost:3000/"
@@ -7,7 +6,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-        const session = Cookies.get("@session");
+        const session = localStorage.getItem("@session");
         if (session) {
             const { token } = JSON.parse(session);
             if (token) {
