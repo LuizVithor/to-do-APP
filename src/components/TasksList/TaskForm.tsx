@@ -10,6 +10,7 @@ export const TaskForm = () => {
     const { getTasks } = useTasks();
 
     const {
+        reset,
         control,
         register,
         handleSubmit,
@@ -23,7 +24,10 @@ export const TaskForm = () => {
 
     const createTask = (data: typeof defaultValues) => {
         const response = instance.post("/tasks", data)
-            .then(() => getTasks())
+            .then(() => {
+                getTasks()
+                reset()  
+            })
         toast.promise(response, {
             pending: "Criando tarefa...",
             success: "Tarefa criada com sucesso!",
